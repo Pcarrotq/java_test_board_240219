@@ -8,6 +8,7 @@ public class Main {
 
     Scanner sc = new Scanner(System.in);
 
+    int articleLastId = 0;
     while (true) {
       System.out.printf("명령) ");
       String cmd = sc.nextLine();
@@ -19,7 +20,8 @@ public class Main {
         System.out.printf("내용 : ");
         String body = sc.nextLine();
 
-        int id = 1;
+        int id = ++articleLastId; // articleLastId + 1
+        System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if (cmd.equals("exit")) {
         System.out.println("프로그램을 종료합니다.");

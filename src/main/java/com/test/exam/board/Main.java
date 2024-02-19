@@ -21,6 +21,13 @@ public class Main {
         String body = sc.nextLine();
 
         int id = ++articleLastId; // articleLastId + 1
+
+        Article article = new Article();
+        article.id = id;
+        article.title = title;
+        article.body = body;
+
+        System.out.println("생성된 게시물 객체 : "+article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if (cmd.equals("exit")) {
@@ -31,5 +38,15 @@ public class Main {
 
     System.out.println("== 자바 텍스트 게시판 종료 ==");
     sc.close();
+  }
+}
+
+class Article {
+  int id;
+  String title;
+  String body;
+
+  public String toString() {
+    return "{ id : " + id + ", title : " + title + ", body : " + body + " }";
   }
 }

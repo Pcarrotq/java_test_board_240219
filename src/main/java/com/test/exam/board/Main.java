@@ -46,6 +46,7 @@ class Article {
   String title;
   String body;
 
+  @Override
   public String toString() {
     return "{ id : " + id + ", title : " + title + ", body : " + body + " }";
   }

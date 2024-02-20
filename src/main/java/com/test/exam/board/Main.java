@@ -1,4 +1,5 @@
 package com.test.exam.board;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -9,6 +10,14 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     int articleLastId = 0;
     Article lastArticle = null;
+
+    ArrayList<Article> articles = new ArrayList<>();
+
+    // 테스트 게시물
+    articles.add(new Article(1, "제목1", "내용1"));
+    articles.add(new Article(1, "제목2", "내용2"));
+    articles.add(new Article(1, "제목3", "내용3"));
+    // 테스트 게시물 끝
 
     while (true) {
       System.out.printf("명령) ");
@@ -40,6 +49,16 @@ public class Main {
         System.out.printf("id : %d\n", article.id);
         System.out.printf("title : %s\n", article.title);
         System.out.printf("body : %s\n", article.body);
+      }
+      else if (cmd.equals("/user/article/list")) {
+        System.out.println("== 게시물 리스트 ==");
+        System.out.println("===================");
+        System.out.println("번호 / 제목");
+        System.out.println("===================");
+
+        for (Article article : articles) {
+          System.out.printf("%d / %s\n", article.id, article.title);
+        }
       }
       else if (cmd.equals("exit")) {
         System.out.println("프로그램을 종료합니다.");

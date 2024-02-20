@@ -7,8 +7,9 @@ public class Main {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = new Scanner(System.in);
-
     int articleLastId = 0;
+    Article lastArticle = null;
+
     while (true) {
       System.out.printf("명령) ");
       String cmd = sc.nextLine();
@@ -23,9 +24,22 @@ public class Main {
         int id = ++articleLastId; // articleLastId + 1
 
         Article article = new Article(id, title, body);
+        lastArticle = article;
 
-        System.out.println("생성된 게시물 객체 : "+article);
+        System.out.println("생성된 게시물 객체 : " + article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
+      }
+      else if (cmd.equals("/user/article/detail")) {
+        if (lastArticle == null) {
+          System.out.println("게시물이 존재하지 않습니다.");
+          continue;
+        }
+
+        Article article = lastArticle;
+        System.out.println("== 게시물 상세 내용 ==");
+        System.out.printf("id : %d\n", article.id);
+        System.out.printf("title : %s\n", article.title);
+        System.out.printf("body : %s\n", article.body);
       }
       else if (cmd.equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
@@ -47,6 +61,10 @@ class Article {
     this.id = id;
     this.title = title;
     this.body = body;
+
+    System.out.printf("id : %d\n", id);
+    System.out.printf("body : %s\n", title);
+    System.out.printf("body : %s\n", body);
   }
 
   @Override

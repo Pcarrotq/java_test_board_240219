@@ -45,12 +45,12 @@ public class Main {
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if (cmd.equals("/user/article/detail")) {
-        if (lastArticle == null) {
+        Article article = articles.get(articles.size() - 1);
+        if (articles.isEmpty()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
-
-        Article article = lastArticle;
+        
         System.out.println("== 게시물 상세 내용 ==");
         System.out.printf("id : %d\n", article.id);
         System.out.printf("title : %s\n", article.title);

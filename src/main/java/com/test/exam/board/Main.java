@@ -9,6 +9,7 @@ public class Main {
     articles.add(new Article(1, "제목2", "내용2"));
     articles.add(new Article(1, "제목3", "내용3"));
   }
+
   public static void main(String[] args) {
     System.out.println("== 자바 텍스트 게시판 0.1v ==");
     System.out.println("== 자바 텍스트 게시판 시작 ==");
@@ -16,9 +17,14 @@ public class Main {
     Scanner sc = new Scanner(System.in);
     int articleLastId = 0;
     Article lastArticle = null;
+    int articleLastId = 0;
 
     ArrayList<Article> articles = new ArrayList<>();
     makeTestData(articles);
+
+    if (articles.size() > 0) {
+      articleLastId = articles.get(articles.size() - 1).id;
+    }
 
     while (true) {
       System.out.printf("명령) ");
@@ -56,7 +62,7 @@ public class Main {
         System.out.println("===================");
         System.out.println("번호 / 제목");
         System.out.println("===================");
-        
+
         for (int i = articles.size() - 1; i >= 0; i--) {
           Article article = articles.get(i);
           System.out.printf("%d / %s\n", article.id, article.title);

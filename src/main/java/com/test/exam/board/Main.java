@@ -15,7 +15,6 @@ public class Main {
     System.out.println("== 자바 텍스트 게시판 시작 ==");
 
     Scanner sc = new Scanner(System.in);
-    int articleLastId = 0;
     Article lastArticle = null;
     int articleLastId = 0;
 
@@ -42,7 +41,7 @@ public class Main {
         Article article = new Article(id, title, body);
         lastArticle = article;
 
-        System.out.println("생성된 게시물 객체 : " + article);
+        articles.add(article);
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if (cmd.equals("/user/article/detail")) {

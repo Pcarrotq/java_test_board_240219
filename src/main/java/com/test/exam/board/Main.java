@@ -11,27 +11,35 @@ public class Main {
   public static void main(String[] args) {
     System.out.println("== 자바 텍스트 게시판 0.1v ==");
     System.out.println("== 자바 텍스트 게시판 시작 ==");
+
     Scanner sc = new Scanner(System.in);
     int articleLastId = 0;
     List<Article> articles = new ArrayList<>();
+
     makeTestData(articles);
+
     if(articles.size() > 0) {
       articleLastId = articles.get(articles.size() - 1).id;
     }
+
     while (true) {
       System.out.printf("명령) ");
+
       String cmd = sc.nextLine();
       Rq rq = new Rq(cmd);
       Map<String, String> params = rq.getParams();
+
       if (rq.getUrlPath().equals("/usr/article/write")) {
         System.out.println("== 게시물 작성 ==");
         System.out.printf("제목 : ");
         String title = sc.nextLine();
         System.out.printf("내용 : ");
         String body = sc.nextLine();
+
         int id = ++articleLastId;
         Article article = new Article(id, title, body);
         articles.add(article);
+
         System.out.printf("%d번 게시물이 생성되었습니다.\n", article.id);
       }
       else if (rq.getUrlPath().equals("/usr/article/list")) {
@@ -39,6 +47,7 @@ public class Main {
         System.out.println("===================");
         System.out.println("번호 / 제목");
         System.out.println("===================");
+        
         for(int i = articles.size() - 1; i >= 0; i--) {
           Article article = articles.get(i);
           System.out.printf("%d / %s\n", article.id, article.title);
@@ -68,6 +77,7 @@ public class Main {
           System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
           continue;
         }
+
         Article article = articles.get(id - 1);
         System.out.println("== 게시물 상세내용 ==");
         System.out.printf("번호 : %d\n", article.id);
@@ -79,6 +89,7 @@ public class Main {
         break;
       }
     }
+
     System.out.println("== 자바 텍스트 게시판 종료 ==");
     sc.close();
   }

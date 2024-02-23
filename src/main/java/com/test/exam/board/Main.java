@@ -28,6 +28,7 @@ public class Main {
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);
+      Map<String, String> params = rq.getParams();
 
       if (rq.getUrlPath().equals("/user/article/write")) {
         System.out.println("== 게시물 작성 ==");
@@ -45,11 +46,19 @@ public class Main {
         System.out.printf("%d번 게시물이 생성되었습니다.\n", id);
       }
       else if (rq.getUrlPath().equals("/user/article/detail")) {
-        Article article = articles.get(articles.size() - 1);
         if (articles.isEmpty()) {
           System.out.println("게시물이 존재하지 않습니다.");
           continue;
         }
+
+        int id = Integer.parseInt(params.get("id"));
+
+        if (id > articles.size()) {
+          System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
+          continue;
+        }
+
+        Article article = articles.get(articles.size() - 1);
 
         System.out.println("== 게시물 상세 내용 ==");
         System.out.printf("id : %d\n", article.id);

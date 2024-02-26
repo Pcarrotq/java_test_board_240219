@@ -1,12 +1,19 @@
 package com.test.exam.board;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class Main {
   static void makeTestData(List<Article> articles) {
     articles.add(new Article(1, "제목1", "내용1"));
     articles.add(new Article(2, "제목2", "내용2"));
     articles.add(new Article(3, "제목3", "내용3"));
+    // 테스트 게시물을 100개로 늘림
+    IntStream.rangeClosed(1, 100)
+        .forEach(
+            i -> articles.add(new Article(i, "제목" + i, "내용" + i)
+            )
+        );
   }
   public static void main(String[] args) {
     System.out.println("== 자바 텍스트 게시판 0.1v ==");
@@ -47,6 +54,23 @@ public class Main {
         System.out.println("===================");
         System.out.println("번호 / 제목");
         System.out.println("===================");
+
+        // articles : 정렬되지 않은 리모콘의 복사본(객체 주소) 있다.
+        List<Article> filteredArticles = articles;
+
+        // 검색 기능 시작
+        if (params.containsKey("searchKeyword")) {
+          String searchKeyword = params.get("searchKeyword");
+          filteredArticles = new ArrayList<>();
+
+          for (Article article : articles) {
+            boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
+            if (matched) {
+              filteredArticles.add(article);
+            }
+          }
+        }
+        // 검색 기능 끝
 
         boolean orderByIdDesc = true;
         if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {

@@ -1,4 +1,4 @@
-package com.sbs.exam.board;
+package com.test.exam.board;
 
 import java.util.*;
 import java.util.stream.IntStream;

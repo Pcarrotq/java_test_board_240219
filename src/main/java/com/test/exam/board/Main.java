@@ -1,4 +1,4 @@
-package com.test.exam.board;
+package com.sbs.exam.board;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -47,7 +47,7 @@ public class Main {
         actionUsrArticleModify(sc, rq, articles);
       }
       else if (rq.getUrlPath().equals("/usr/article/delete")) {
-        actionUsrArticleDetail(rq, articles);
+        actionUsrArticleDelete(rq, articles);
       }
       else if (rq.getUrlPath().equals("exit")) {
         System.out.println("프로그램을 종료합니다.");
@@ -62,12 +62,12 @@ public class Main {
   private static void actionUsrArticleDelete(Rq rq, List<Article> articles) {
     Map<String, String> params = rq.getParams();
 
-    if (articles.isEmpty()) {
+    if(articles.isEmpty()) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
-    if (params.containsKey("id") == false) {
+    if(params.containsKey("id") == false) {
       System.out.println("id를 입력해주세요.");
       return;
     }
@@ -79,47 +79,54 @@ public class Main {
     } catch (NumberFormatException e) {
       System.out.println("id를 정수형태로 입력해주세요.");
       return;
-
-      Article article = findById(id, articles);
-
-      if (article == null) {
-        System.out.printf("%번 게시물은 존재하지 않습니다.\n", id);
-        return;
-      }
-
-      articles.remove(article);
-
-      System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
     }
+
+    Article article = findById(id, articles);
+
+    if(article == null) {
+      System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+      return;
+    }
+
+    articles.remove(article);
+
+    System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
   }
 
   private static void actionUsrArticleModify(Scanner sc, Rq rq, List<Article> articles) {
     Map<String, String> params = rq.getParams();
 
-    if (articles.isEmpty()) {
+    if(articles.isEmpty()) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
-    if (params.containsKey("id") == false) {
-      System.out.println("id들 입력해주세요.");
+
+    if(params.containsKey("id") == false) {
+      System.out.println("id를 입력해주세요.");
       return;
     }
 
     int id = 0;
 
     try {
-      id =Integer.parseInt(params.get("id"));
+      id = Integer.parseInt(params.get("id"));
     } catch (NumberFormatException e) {
-      System.out.println("id를 정수 형태로 입력해주세요.");
+      System.out.println("id를 정수형태로 입력해주세요.");
       return;
     }
 
-    if (id > articles.size()) {
+    if(id > articles.size()) {
       System.out.printf("%d번 게시물이 존재하지 않습니다.\n", id);
       return;
     }
 
-    Article article = articles.get(id - 1);
+    Article article = findById(id, articles);
+
+    if(article == null) {
+      System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+      return;
+    }
+
     System.out.printf("새 제목 : ");
     article.title = sc.nextLine();
     System.out.printf("새 내용 : ");
@@ -155,7 +162,12 @@ public class Main {
       return;
     }
 
-    Article article = articles.get(id - 1);
+    Article article = findById(id, articles);
+
+    if(article == null) {
+      System.out.printf("%d번 게시물은 존재하지 않습니다.\n", id);
+      return;
+    }
 
     System.out.println("== 게시물 상세내용 ==");
     System.out.printf("번호 : %d\n", article.id);
@@ -165,7 +177,6 @@ public class Main {
 
   private static void actionUsrArticleWrite(Scanner sc, Rq rq, List<Article> articles, int articleLastId) {
     System.out.println("== 게시물 작성 ==");
-
     System.out.printf("제목 : ");
     String title = sc.nextLine();
 
@@ -223,6 +234,16 @@ public class Main {
     for(Article article : sortedArticles) {
       System.out.printf("%d / %s\n", article.id, article.title);
     }
+  }
+
+  private static Article findById(int id, List<Article> articles) {
+    for(Article article : articles) {
+      if(article.id == id) {
+        return article;
+      }
+    }
+
+    return null;
   }
 }
 

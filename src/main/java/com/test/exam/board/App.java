@@ -22,7 +22,7 @@ public class App {
       if (loginedMember != null) {
         promptName = loginedMember.loginId;
       }
-      
+
       String cmd = sc.nextLine();
 
       Rq rq = new Rq(cmd);

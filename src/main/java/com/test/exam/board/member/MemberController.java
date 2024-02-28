@@ -7,6 +7,7 @@ import com.test.exam.board.member.dto.Member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class MemberController {
   int memberLastId;
@@ -16,9 +17,19 @@ public class MemberController {
     memberLastId = 0;
     members = new ArrayList<>();
 
+    makeTestData();
+
     if (members.size() > 0) {
       memberLastId = members.get(members.size() - 1).id;
     }
+  }
+
+  void makeTestData() {
+    IntStream.rangeClosed(1, 3)
+        .forEach(
+            i -> members.add(new Member(i, "user" + i, "user" + i, "이름" + i)
+            )
+        );
   }
 
   public void actionJoin(Rq rq) {
@@ -90,5 +101,75 @@ public class MemberController {
 
     members.add(member);
     System.out.printf("\"%s\"님 회원 가입 되었습니다.\n", name);
+  }
+
+  public void actionLogin(Rq rq) {
+    System.out.println("== 로그인 ==");
+    String loginId;
+    String loginPw;
+    Member member;
+
+    // 로그인 아이디 유효성 검사 시작
+    while (true) {
+      System.out.printf("로그인 아이디 : ");
+      loginId = Container.sc.nextLine();
+
+      if (loginId.trim().length() == 0) {
+        System.out.println("로그인 아이디를 입력해주세요.");
+        continue;
+      }
+
+      member = getMemberByLoginId(loginId);
+
+      if (member == null) {
+        System.out.println("입력하신 아이디는 없는 아이디입니다.");
+        continue;
+      }
+
+      break;
+    }
+    // 로그인 아이디 유효성 검사 끝
+
+    // 로그인 비밀번호 유효성 검사 시작
+    int tryLoginPwCount = 0;
+    int tryLoginPwMaxCount = 3;
+
+    while (true) {
+      if (tryLoginPwCount >= tryLoginPwMaxCount) {
+        System.out.println("비밀번호를 다시 확인 후 입력해주세요.");
+        return;
+      }
+
+      System.out.printf("로그인 비밀번호 : ");
+      loginPw = Container.sc.nextLine();
+
+      if (loginPw.trim().length() == 0) {
+        System.out.println("로그인 비밀번호를 입력해주세요.");
+        continue;
+      }
+
+      if (member.loginPw.equals(loginPw) == false) {
+        System.out.println("로그인 비밀번호가 일치하지 않습니다.");
+        tryLoginPwCount++;
+
+        System.out.printf("비밀번호 틀린 횟수 ( %d/3 )\n", tryLoginPwCount);
+        continue;
+      }
+
+      break;
+    }
+    // 로그인 비밀번호 유효성 검사 끝
+
+    System.out.printf("\"%s\"님 로그인되었습니다.\n", member.loginId);
+  }
+
+  private Member getMemberByLoginId(String loginId) {
+    for (Member member : members) {
+      if (member.loginId.equals(loginId)) {
+        return member;
+      }
+    }
+
+    return null;
   }
 }

@@ -37,10 +37,10 @@ public class ArticleController {
   public void actionWrite(Rq rq) {
     System.out.println("== 게시물 작성 ==");
     System.out.printf("제목 : ");
-    String title = com.test.exam.board.container.Container.sc.nextLine();
+    String title = com.test.exam.board.Container.Container.sc.nextLine();
 
     System.out.printf("내용 : ");
-    String body = com.test.exam.board.container.Container.sc.nextLine();
+    String body = com.test.exam.board.Container.Container.sc.nextLine();
 
     int id = ++articleLastId;
 
@@ -142,9 +142,9 @@ public class ArticleController {
     }
 
     System.out.printf("새 제목 : ");
-    article.title = com.test.exam.board.container.Container.sc.nextLine();
+    article.title = com.test.exam.board.Container.Container.sc.nextLine();
     System.out.printf("새 내용 : ");
-    article.body = com.test.exam.board.container.Container.sc.nextLine();
+    article.body = com.test.exam.board.Container.Container.sc.nextLine();
 
     System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
   }

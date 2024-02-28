@@ -1,7 +1,6 @@
 package com.test.exam.board.member;
 
 import com.test.exam.board.Rq;
-import com.test.exam.board.Article.dto.Article;
 import com.test.exam.board.Container.Container;
 import com.test.exam.board.member.dto.Member;
 
@@ -159,6 +158,8 @@ public class MemberController {
       break;
     }
     // 로그인 비밀번호 유효성 검사 끝
+
+    rq.setSessionAttr("logindMember", member);
 
     System.out.printf("\"%s\"님 로그인되었습니다.\n", member.loginId);
   }

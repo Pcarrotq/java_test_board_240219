@@ -1,5 +1,9 @@
 package com.test.exam.board;
 
+import com.test.exam.board.Container.Container;
+import com.test.exam.board.member.dto.Member;
+import com.test.exam.board.session.Session;
+
 import java.util.Map;
 
 public class Rq {
@@ -39,5 +43,11 @@ public class Rq {
     } catch (NumberFormatException e) {
       return defaultValue;
     }
+  }
+
+  public void setSessionAttr(String key, Member value) {
+    Session session = Container.getSession();
+
+    session.setAttribute(key, value);
   }
 }

@@ -3,7 +3,7 @@ package com.test.exam.board.Article;
 import com.test.exam.board.Rq;
 import com.test.exam.board.Util;
 import com.test.exam.board.Article.dto.Article;
-import com.test.exam.board.Container.*;
+import com.test.exam.board.Container.Container;
 
 import java.util.ArrayList;
 import java.util.List;
